@@ -40,3 +40,6 @@ nbdist/
 
 log/
 logs/
+bin/
+build/
+

@@ -20,6 +20,6 @@ public class UserInterestTask {
         DataStreamSource<String> dataStream = env.addSource(new FlinkKafkaConsumer<String>("con", new SimpleStringSchema(), properties));
         dataStream.map(new GetLogFunction()).keyBy("userId").map(new UserHistoryWithInterestMapFunction());
 
-        env.execute("User Product History");
+        env.execute("User Product Interest");
     }
 }
