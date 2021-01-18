@@ -5,6 +5,9 @@ import com.demo.service.KafkaService;
 import com.demo.service.RecommandService;
 import com.demo.util.Result;
 import com.demo.util.ResultUtils;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,6 +21,8 @@ import java.util.List;
 @Controller
 public class RecommandController {
 
+	private Logger logger = LoggerFactory.getLogger(this.getClass());
+	
     @Autowired
     RecommandService recommandService;
 
@@ -32,7 +37,7 @@ public class RecommandController {
     @GetMapping("/recommand")
     public String recommandByUserId(@RequestParam("userId") String userId,
                                     Model model) throws IOException {
-
+    	logger.info("/recommand recommandByUserId(...)...");
         // 拿到不同推荐方案的结果
         List<ProductDto> hotList = recommandService.recommandByHotList();
         List<ProductDto> itemCfCoeffList = recommandService.recomandByItemCfCoeff();

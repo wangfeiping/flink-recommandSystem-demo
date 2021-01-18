@@ -15,10 +15,16 @@ public class HbaseClient {
 
     static {
         Configuration conf = HBaseConfiguration.create();
-        conf.set("hbase.rootdir", Property.getStrValue("hbase.rootdir"));
-        conf.set("hbase.zookeeper.quorum", Property.getStrValue("hbase.zookeeper.quorum"));
-        conf.set("hbase.client.scanner.timeout.period", Property.getStrValue("hbase.client.scanner.timeout.period"));
-        conf.set("hbase.rpc.timeout", Property.getStrValue("hbase.rpc.timeout"));
+//        conf.set("hbase.rootdir", Property.getStrValue("hbase.rootdir"));
+//        conf.set("hbase.zookeeper.quorum", Property.getStrValue("hbase.zookeeper.quorum"));
+//        conf.set("hbase.client.scanner.timeout.period", Property.getStrValue("hbase.client.scanner.timeout.period"));
+//        conf.set("hbase.rpc.timeout", Property.getStrValue("hbase.rpc.timeout"));
+        conf.set("hbase.rootdir", "hdfs://hbase:16000/hbase");
+        conf.set("hbase.zookeeper.quorum", "zk");
+        conf.set("hbase.client.scanner.timeout.period", "1000");
+        conf.set("hbase.rpc.timeout", "1000");
+        conf.set("hbase.client.retries.number", "3");
+        conf.set("hbase.client.operation.timeout", "30000");
         try {
             conn = ConnectionFactory.createConnection(conf);
             admin = conn.getAdmin();

@@ -10,10 +10,16 @@ import org.apache.flink.api.common.functions.MapFunction;
  */
 public class LogMapFunction implements MapFunction<String, LogEntity> {
 
-    @Override
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -4290089739037563103L;
+
+	@Override
     public LogEntity map(String s) throws Exception {
         System.out.println(s);
         LogEntity log = LogToEntity.getLog(s);
+// ？？？会导致无法消费kafka消息
         if (null != log){
             String rowKey = log.getUserId() + "_" + log.getProductId()+ "_"+ log.getTime();
             HbaseClient.putData("con",rowKey,"log","userid",String.valueOf(log.getUserId()));

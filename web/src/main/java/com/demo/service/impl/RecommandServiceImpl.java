@@ -77,6 +77,7 @@ public class RecommandServiceImpl implements RecommandService {
 
 	@Override
 	public List<ProductDto> recommandByHotList() {
+		logger.info("recommandByHotList()...");
 		// 获取top榜单
 		List<String> topList = getDefaultTop();
 		int topSize = topList.size();
@@ -143,7 +144,7 @@ public class RecommandServiceImpl implements RecommandService {
 				ps = HbaseClient.getRow(table, s);
 				Collections.sort(ps,((o1, o2) -> -(new BigDecimal(o1.getValue().toString()).compareTo(new BigDecimal(o2.getValue().toString())))));
 			} catch (Exception e) {
-				logger.warn("Hbase中没有产品【{}】记录", s);
+				logger.warn("Hbase error [{}]: {}", s, e.getMessage());
 			}
 			if (CollectionUtils.isEmpty(ps)) {
 				continue;
