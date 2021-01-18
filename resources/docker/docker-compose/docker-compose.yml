@@ -79,6 +79,20 @@ services:
       - JOB_MANAGER_RPC_ADDRESS=jobmanager
   taskmanager:
     image: ${FLINK_DOCKER_IMAGE_NAME:-flink}:1.7.2
+    container_name: tm_01
+    expose:
+      - "6121"
+      - "6122"
+    depends_on:
+      - jobmanager
+    command: taskmanager
+    links:
+      - "jobmanager:jobmanager"
+    environment:
+      - JOB_MANAGER_RPC_ADDRESS=jobmanager
+  taskmanager02:
+    image: ${FLINK_DOCKER_IMAGE_NAME:-flink}:1.7.2
+    container_name: tm_02
     expose:
       - "6121"
       - "6122"
