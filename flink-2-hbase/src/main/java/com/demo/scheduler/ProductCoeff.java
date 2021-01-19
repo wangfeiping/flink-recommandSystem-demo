@@ -6,6 +6,8 @@ import com.demo.client.RedisClient;
 import com.demo.domain.ProductPortraitEntity;
 import com.demo.util.Constants;
 
+import io.netty.util.internal.StringUtil;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -57,14 +59,14 @@ public class ProductCoeff {
 			String age_40 = HbaseClient.getData("prod", proId, "age", Constants.AGE_40);
 			String age_50 = HbaseClient.getData("prod", proId, "age", Constants.AGE_50);
 			String age_60 = HbaseClient.getData("prod", proId, "age", Constants.AGE_60);
-			entity.setMan(Integer.valueOf(man));
-			entity.setWoman(Integer.valueOf(woman));
-			entity.setAge_10(Integer.valueOf(age_10));
-			entity.setAge_20(Integer.valueOf(age_20));
-			entity.setAge_30(Integer.valueOf(age_30));
-			entity.setAge_40(Integer.valueOf(age_40));
-			entity.setAge_50(Integer.valueOf(age_50));
-			entity.setAge_60(Integer.valueOf(age_60));
+			entity.setMan(checkValue(man));
+			entity.setWoman(checkValue(woman));
+			entity.setAge_10(checkValue(age_10));
+			entity.setAge_20(checkValue(age_20));
+			entity.setAge_30(checkValue(age_30));
+			entity.setAge_40(checkValue(age_40));
+			entity.setAge_50(checkValue(age_50));
+			entity.setAge_60(checkValue(age_60));
 		} catch (Exception e) {
 			System.err.println("proId: " + proId);
 			e.printStackTrace();
@@ -73,6 +75,13 @@ public class ProductCoeff {
 
 	}
 
+	private int checkValue(String value) {
+		if (StringUtil.isNullOrEmpty(value)) {
+			return 0;
+		}
+		return Integer.valueOf(value);
+	}
+	
 	/**
 	 * 根据标签计算两个产品之间的相关度
 	 * @param product 产品
